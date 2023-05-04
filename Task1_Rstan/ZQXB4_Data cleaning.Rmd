@@ -1,0 +1,63 @@
+---
+title: "Rstan_Data cleaning"
+author: "ZQXB4"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+setwd("D:/Desktop/GEOG0125/Assessment/RStan/Dataset/cleaned data")        
+```
+
+```{r}
+# install csv files
+deaths <- read.csv("Death2022.csv")
+census <- read.csv("Census2021.csv")
+health <- read.csv("HealthIndexScore2020.csv")
+imd <- read.csv("IMD2015.csv")
+```
+
+```{r}
+# select cause of death as COVID 19
+covid <- subset(deaths, grepl("COVID 19", `CauseOfDeath`, ignore.case = TRUE))
+```
+
+```{r}
+# calculate number of COVID death in each authority as dependent var
+covid_death <- covid %>%
+  group_by(LADCD) %>%
+  summarise(covid = sum(`X2022`))
+```
+
+```{r}
+# calculate average imd scores in each authority
+imd_mean <- imd %>%
+  group_by(ï..LADCD) %>%
+  summarise(income = mean(`Income.Score`), environment = mean(`Living.Environment.Score`))
+```
+
+
+```{r}
+# data merging
+covid19_death <- merge(covid_death, census, by.x = "LADCD", by.y = "ï..Area.Code")
+covid19_death <- merge(covid19_death, health, by.x = "LADCD", by.y = "ï..Area.Code")
+covid19_death <- merge(covid19_death, imd_mean, by.x = "LADCD", by.y = "ï..LADCD")
+```
+
+```{r}
+# delete unsed columns
+covid19_death <- covid19_death[, !colnames(covid19_death) %in% c("Area.Name.y")]
+```
+
+```{r}
+write.csv(covid19_death, file = "cleaned_data.csv", row.names = TRUE)
+```
+
+
+
+
+
