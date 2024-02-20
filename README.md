@@ -1,4 +1,4 @@
-# GEOG0125
+# GEOG0125 Advanced Topics in Social and Geographic Data Science
 
 Task 1 Statistical Modeling + Spatial Analysis: 1. Utilized a Bayesian framework-based multi-variable spatial conditional autoregressive model (CAR) to predict COVID-19 mortality risks in the unit of Local Authority level in England. 2. Incorporated health score indices and socio-economic data as input variables. 3. Demonstrated Relative Risk Ratios, Statistical Significance, and Exceedance Probabilities through geographic spatial visualization to identify units with potential risk escalation. 4. Offered policy recommendations to intervene in COVID-19 mortality risks. (Distinction) 
 
